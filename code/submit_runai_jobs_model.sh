@@ -1,7 +1,7 @@
 experiment="FastRCNN"
 
 runai submit \
-  --name pedro-test \
+  --name pedro-fastrcnn \
   --image nvcr.io/nvidia/pytorch:20.10-py3 \
   --backoffLimit 0 \
   --gpu 2 \
