@@ -2,7 +2,7 @@ experiment="FastRCNN"
 
 runai submit \
   --name pedro-fastrcnn \
-  --image nvcr.io/nvidia/pytorch:20.10-py3 \
+  --image 10.202.67.201:32581/wds20:gesturelearning \
   --backoffLimit 0 \
   --gpu 2 \
   --cpu 8 \

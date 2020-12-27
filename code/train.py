@@ -19,7 +19,7 @@ Description
 # cp references/detection/coco_utils.py ../
 
 
-# Data augmentation vertical flip / horizontal flip
+# Data augmentation vertical flip
 from engine import train_one_epoch, evaluate
 import utils
 import transforms as T
@@ -84,6 +84,7 @@ lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer,
 num_epochs = 10
 
 for epoch in range(num_epochs):
+    print(f"Epoch {epoch}")
     # train for one epoch, printing every 10 iterations
     train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq=10)
     # update the learning rate
@@ -93,4 +94,4 @@ for epoch in range(num_epochs):
 
 
 print('Finished Training')
-torch.save(model.state_dict(), 'model.torch')
+torch.save(model, 'model.torch')

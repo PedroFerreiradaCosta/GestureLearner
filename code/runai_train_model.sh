@@ -39,7 +39,9 @@ printf '%s\n' --------------------
 echo PYTHON
 printf '%s\n' --------------------
 echo PREPROCCESSING
+printf '%s\n' --------------------
 python3 /project/code/clean_egohands_dataset.py
 printf '%s\n' --------------------
 echo TRAINING
+printf '%s\n' --------------------
 python3 /project/code/train.py
