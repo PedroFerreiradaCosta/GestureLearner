@@ -34,8 +34,7 @@ def get_transform(train):
     if train:
         # during training, randomly flip the training images
         # and ground-truth for data augmentation
-        transforms.append(T.RandomHorizontalFlip(0.25))
-        transforms.append(T.RandomVerticalFlip(0.25))
+        transforms.append(T.RandomHorizontalFlip(0.5))
     return T.Compose(transforms)
 
 # use our dataset and defined transformations
@@ -44,6 +43,8 @@ dataset_test = EgoHandsDataset('../data/', get_transform(train=False))
 
 # split the dataset in train and test set
 torch.manual_seed(1)
+torch.backends.cudnn.deterministics = True
+torch.backends.cudnn.benchmark = False
 indices = torch.randperm(len(dataset)).tolist()
 dataset = torch.utils.data.Subset(dataset, indices[:-100])
 dataset_test = torch.utils.data.Subset(dataset_test, indices[-100:])
@@ -71,7 +72,7 @@ model = torch.nn.DataParallel(model).to(device)
 # construct an optimizer
 ###  Check optimizer with Walter
 params = [p for p in model.parameters() if p.requires_grad]
-optimizer = torch.optim.Adam(params, lr=0.005)
+optimizer = torch.optim.SGD(params, lr=0.005, momentum=0.9, weight_decay=0.0005)
 
 # and a learning rate scheduler which decreases the learning rate by
 # 10x every 3 epochs
