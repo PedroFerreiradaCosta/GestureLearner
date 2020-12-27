@@ -20,7 +20,7 @@ class EgoHandsDataset(torch.utils.data.Dataset):
         self.masks = list(sorted(os.listdir(os.path.join(root, "masks"))))
 
     def __getitem__(self, idx):
-        # load images ad masks
+        # load images and masks
         img_path = os.path.join(self.root, "images", self.imgs[idx])
         mask_path = os.path.join(self.root, "masks", self.masks[idx])
         img = Image.open(img_path).convert("RGB")

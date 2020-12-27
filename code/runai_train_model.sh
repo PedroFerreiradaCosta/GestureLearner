@@ -24,6 +24,7 @@ echo SUCCESS
 printf '%s\n' --------------------
 echo DOWNLOAD REFERENCE SCRIPT
 printf '%s\n' --------------------
+cd /project/code
 git clone https://github.com/pytorch/vision.git
 cd /project/code/vision
 git checkout v0.3.0
