@@ -22,7 +22,23 @@ pip install -r /project/requirements.txt
 echo SUCCESS
 
 printf '%s\n' --------------------
+echo DOWNLOAD REFERENCE SCRIPT
+printf '%s\n' --------------------
+git clone https://github.com/pytorch/vision.git
+cd /project/code/vision
+git checkout v0.3.0
+cp references/detection/utils.py ../
+cp references/detection/transforms.py ../
+cp references/detection/coco_eval.py ../
+cp references/detection/engine.py ../
+cp references/detection/coco_utils.py ../
+cd ..
+
+printf '%s\n' --------------------
 echo PYTHON
 printf '%s\n' --------------------
-python3 /convnet/code/train.py
-python3 /convnet/code/test.py
+echo PREPROCCESSING
+python3 /project/code/clean_egohands_dataset.py
+printf '%s\n' --------------------
+echo TRAINING
+python3 /project/code/train.py
