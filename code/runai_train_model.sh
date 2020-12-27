@@ -15,10 +15,6 @@ export MLFLOW_EXPERIMENT_NAME=${experiment}
 echo $MLFLOW_EXPERIMENT_NAME
 echo $MLFLOW_TRACKING_URI
 
-printf '%s\n' --------------------
-echo PIP
-printf '%s\n' --------------------
-pip install -r /project/requirements.txt
 echo SUCCESS
 
 printf '%s\n' --------------------
