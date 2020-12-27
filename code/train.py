@@ -90,3 +90,7 @@ for epoch in range(num_epochs):
     lr_scheduler.step()
     # evaluate on the test dataset
     evaluate(model, data_loader_test, device=device)
+
+
+print('Finished Training')
+torch.save(model.state_dict(), 'model.torch')
