@@ -10,3 +10,4 @@ runai submit \
   --volume /nfs/home/wds20/pedro/GestureLearner/:/project \
   --command -- bash /project/code/runai_train_model.sh \
   ${experiment}
+

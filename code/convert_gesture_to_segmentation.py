@@ -40,26 +40,36 @@ def convert_to_segment(base_path, dir):
                 file_name.append(f)
 
     # Segment images into a different folder using trained model
-    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-    model_path = 'model.torch'
-    model = torch.load(model_path)
-    model = torch.nn.DataParallel(model).to(device)
-    model.eval()
-    print(f'Using {torch.cuda.device_count()} GPUs')
+    # device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    # model_path = 'model.torch'
+    # model = torch.load(model_path)
+    # model = torch.nn.DataParallel(model).to(device)
+    # model.eval()
+    # print(f'Using {torch.cuda.device_count()} GPUs')
     os.makedirs('../data/masks_class', exist_ok=True)
     # Create label csv file
+    csv_label = np.zeros(len(image_path_array))
+    csv_id = []
     for i, img_path in enumerate(image_path_array):
-        img = np.load(img_path)
-        img = torch.from_numpy(img)
-        with torch.no_grad():
-            prediction = model([img.to(device)])
-        cv2.imwrite(f'../data/masks_class/{file_name[i]}', prediction[0]['masks'][0, 0].mul(255).byte().cpu().numpy())
+        # img = np.load(img_path)
+        # img = torch.from_numpy(img)
+        # with torch.no_grad():
+        #     prediction = model([img.to(device)])
+        # cv2.imwrite(f'../data/masks_class/{file_name[i]}', prediction[0]['masks'][0, 0].mul(255).byte().cpu().numpy())
+        print(file_name[i])
+        csv_label[i] =  file_name[i][4:5]
+        csv_id.append(file_name[i])
+    return csv_id, csv_label
 
 def generate_derivatives(image_dir, sets):
+    label = []
+    id = []
     for set in sets:
         for root, dirs, filenames in os.walk(image_dir):
             for dir in dirs:
-                convert_to_segment(image_dir+set+'/', dir)
+                tmp_id, tmp_label = convert_to_segment(image_dir+set+'/', dir)
+                label.append(tmp_label)
+                id.append(tmp_id)
 
 # rename image files so we dont have overlapping names
 def rename_files(image_dir, rename_file):
