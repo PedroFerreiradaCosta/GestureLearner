@@ -51,11 +51,11 @@ dataset_test = torch.utils.data.Subset(dataset_test, indices[-100:])
 
 # define training and validation data loaders
 data_loader = torch.utils.data.DataLoader(
-    dataset, batch_size=16, shuffle=True, num_workers=1,
+    dataset, batch_size=16, shuffle=True, num_workers=0,
     collate_fn=utils.collate_fn)
 
 data_loader_test = torch.utils.data.DataLoader(
-    dataset_test, batch_size=1, shuffle=False, num_workers=1,
+    dataset_test, batch_size=1, shuffle=False, num_workers=0,
     collate_fn=utils.collate_fn)
 
 # Define GPUs
@@ -67,7 +67,7 @@ num_classes = 2
 # get the model using our helper function
 model = get_instance_segmentation_model(num_classes)
 # move model to the right device
-model.to(device)
+model = torch.nn.DataParallel(model).to(device)
 
 # construct an optimizer
 ###  Check optimizer with Walter
