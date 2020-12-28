@@ -21,14 +21,20 @@ import scipy.io as sio
 def get_masks_and_images(base_path, dir):
     print(f"> Getting masks from {dir}")
     image_path_array = []
+    files  = []
     for root, dirs, filenames in os.walk(base_path + dir):
         for f in filenames:
             if (f.split(".")[1] == "jpg"):
                 img_path = base_path + dir + "/" + f
                 image_path_array.append(img_path)
+                files.append(f)
 
     #sort image_path_array to ensure its in the low to high order expected in polygon.mat
-    image_path_array.sort()
+    zip_list = zip(image_path_array, files)
+    sorted_pairs = sorted(zip_list)
+    tuples = zip(*sorted_pairs)
+    image_path_array, file_name = [list(tuple) for tuple in tuples]
+
     # Contains segmentation info for each 100 frames of 1 dir
     boxes = sio.loadmat(base_path + dir + "/polygons.mat")
     # there are 100 of these per folder in the egohands dataset
@@ -39,7 +45,6 @@ def get_masks_and_images(base_path, dir):
         img_id = image_path_array[pointindex]
         img = cv2.imread(img_id)
         # Save images in ../data/images
-        cv2.imwrite(f'../data/images/{image_path_array[pointindex][61:]}.png', img)
         save_hand = False
         mask = np.zeros((img.shape[0], img.shape[1]))
         for nr_hand, pointlist in enumerate(first):
@@ -61,7 +66,8 @@ def get_masks_and_images(base_path, dir):
                 mask = cv2.fillPoly(mask, [pts], nr_hand+1)
         if save_hand:
             # Save masks in ../data/masks
-            cv2.imwrite(f'../data/masks/{image_path_array[pointindex][61:]}.png', mask)
+            cv2.imwrite(f'../data/masks/{file_name[pointindex]}', mask)
+            cv2.imwrite(f'../data/images/{file_name[pointindex]}', img)
             print(f"> Saved mask for image {pointindex}")
 
 def generate_derivatives(image_dir):
