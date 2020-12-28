@@ -67,7 +67,7 @@ num_classes = 2
 # get the model using our helper function
 model = get_instance_segmentation_model(num_classes)
 # move model to the right device
-model = torch.nn.DataParallel(model).to(device)
+model.to(device)
 
 # construct an optimizer
 ###  Check optimizer with Walter
