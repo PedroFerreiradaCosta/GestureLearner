@@ -64,7 +64,6 @@ def get_masks_and_images(base_path, dir):
 
             # Fill polynomials around hands
             if has_hand:
-                print(nr_hand + 1)
                 mask = cv2.fillPoly(mask, [pts], nr_hand+1)
         # Save masks in ../data/masks
         np.save(f'../data/masks/{file_name[pointindex]}', mask)

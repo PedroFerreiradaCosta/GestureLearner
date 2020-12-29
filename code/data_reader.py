@@ -27,7 +27,7 @@ class EgoHandsDataset(torch.utils.data.Dataset):
         # note that we haven't converted the mask to RGB,
         # because each color corresponds to a different instance
         # with 0 being background
-        mask = np.load(mask_path)  #  Image.open(mask_path)
+        mask = np.load(mask_path, allow_pickle=True)  #  Image.open(mask_path)
 
         # mask = np.array(mask)
         # instances are encoded as different colors
