@@ -80,12 +80,14 @@ def rename_files(image_dir, rename_file):
         for set in sets:
             for root, dirs, filenames in os.walk(image_dir+set):
                 for dir in dirs:
-                    for f in os.listdir(image_dir+ set+  '/' + dir):
+                    print(os.listdir(image_dir + set + '/' + dir))
+                    wait = input()
+                    for f in os.listdir(image_dir + set + '/' + dir):
                         if (dir not in f):
                             if(f.split(".")[1] == "png"):
                                 loop_index += 1
                                 os.rename(image_dir +set + '/'+ dir + "/"  +
-                                          "/" + f, image_dir + set +'/' + dir +
+                                           + f, image_dir + set +'/' + dir +
                                           "/" + set + "_" + dir + "_" + f)
                         else:
                             break

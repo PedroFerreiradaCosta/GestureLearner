@@ -45,6 +45,7 @@ def get_masks_and_images(base_path, dir):
         img_id = image_path_array[pointindex]
         img = cv2.imread(img_id)
         # Save images in ../data/images
+        cv2.imwrite(f'../data/images/{file_name[pointindex]}', img)
         save_hand = False
         mask = np.zeros((img.shape[0], img.shape[1]))
         for nr_hand, pointlist in enumerate(first):
@@ -63,12 +64,11 @@ def get_masks_and_images(base_path, dir):
 
             # Fill polynomials around hands
             if has_hand:
+                print(nr_hand + 1)
                 mask = cv2.fillPoly(mask, [pts], nr_hand+1)
-        if save_hand:
-            # Save masks in ../data/masks
-            cv2.imwrite(f'../data/masks/{file_name[pointindex]}', mask)
-            cv2.imwrite(f'../data/images/{file_name[pointindex]}', img)
-            print(f"> Saved mask for image {pointindex}")
+        # Save masks in ../data/masks
+        np.save(f'../data/masks/{file_name[pointindex]}', mask)
+        print(f"> Saved mask for image {pointindex}")
 
 def generate_derivatives(image_dir):
     for root, dirs, filenames in os.walk(image_dir):
