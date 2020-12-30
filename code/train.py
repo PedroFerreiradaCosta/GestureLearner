@@ -94,4 +94,4 @@ for epoch in range(num_epochs):
 
 
 print('Finished Training')
-torch.save(model, 'model.torch')
+torch.save(model, '../model/model_segmentation.torch')

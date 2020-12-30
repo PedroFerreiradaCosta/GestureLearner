@@ -10,7 +10,7 @@ import zipfile
 import torch
 import scipy.io as sio
 import numpy as np
-
+import pandas as pd
 
 #
 # 1. Get image path
@@ -41,7 +41,7 @@ def convert_to_segment(base_path, dir):
 
     # Segment images into a different folder using trained model
     # device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-    # model_path = 'model.torch'
+    # model_path = '../model/model_segmentation.torch'
     # model = torch.load(model_path)
     # model = torch.nn.DataParallel(model).to(device)
     # model.eval()
@@ -56,7 +56,7 @@ def convert_to_segment(base_path, dir):
         # with torch.no_grad():
         #     prediction = model([img.to(device)])
         # cv2.imwrite(f'../data/masks_class/{file_name[i]}', prediction[0]['masks'][0, 0].mul(255).byte().cpu().numpy())
-        print(file_name[i])
+
         csv_label[i] =  file_name[i][4:5]
         csv_id.append(file_name[i])
     return csv_id, csv_label
@@ -68,8 +68,14 @@ def generate_derivatives(image_dir, sets):
         for root, dirs, filenames in os.walk(image_dir):
             for dir in dirs:
                 tmp_id, tmp_label = convert_to_segment(image_dir+set+'/', dir)
+                if not tmp_id:
+                  continue
                 label.append(tmp_label)
                 id.append(tmp_id)
+    df = pd.DataFrame(
+        np.hstack((np.array(id).ravel()[:, np.newaxis], np.array(label).ravel()[:, np.newaxis]))
+        , columns=['ID', 'Label'])
+    df.to_csv('../data/masks_class/labels.csv')
 
 # rename image files so we dont have overlapping names
 def rename_files(image_dir, rename_file):
@@ -78,31 +84,29 @@ def rename_files(image_dir, rename_file):
         print("Renaming files")
         loop_index = 0
         for set in sets:
+            os.rename(image_dir + set + "/" + '02_l', image_dir + set + "/" + '02_ls')
             for root, dirs, filenames in os.walk(image_dir+set):
                 for dir in dirs:
                     print(os.listdir(image_dir + set + '/' + dir))
-                    wait = input()
                     for f in os.listdir(image_dir + set + '/' + dir):
                         if (dir not in f):
                             if(f.split(".")[1] == "png"):
                                 loop_index += 1
-                                os.rename(image_dir +set + '/'+ dir + "/"  +
-                                           + f, image_dir + set +'/' + dir +
+                                os.rename(image_dir + set + '/' + dir + "/"
+                                           + f, image_dir + set + '/' + dir +
                                           "/" + set + "_" + dir + "_" + f)
                         else:
                             break
-    generate_derivatives("../data/source/egohands/_LABELLED_SAMPLES/", sets)
+    generate_derivatives("../data/source/leap_database", sets)
 
 def extract_folder(dataset_path):
     print("Leap dataset already downloaded.")
     rename_file=False
     if not os.path.exists("../data/source/leap"):
         rename_file = True
-        zip_ref = zipfile.ZipFile(dataset_path, 'r')
-        print("> Extracting Dataset files")
-        zip_ref.extractall("../data/source/leap")
+        import patoolib
+        patoolib.extract_archive("../data/source/leap_database.rar", outdir="../data/source")
         print("> Extraction complete")
-        zip_ref.close()
     rename_files("../data/source/leap_database/", rename_file)
 
 def download_egohands_dataset(dataset_url, dataset_path):
