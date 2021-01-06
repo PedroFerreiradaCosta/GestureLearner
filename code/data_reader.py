@@ -1,7 +1,6 @@
 """
 This class is adapted from the torch vision fastrcnn demo:
 https://pytorch.org/tutorials/intermediate/torchvision_tutorial.html
-
 """
 
 import os

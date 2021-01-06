@@ -1,5 +1,8 @@
 """
-Description
+This script trains a Mask R-CNN on the EgoHands dataset (http://vision.soic.indiana.edu/projects/egohands/)
+to learn to segment multiple hands from images. It also learns to predict boudning boxes,  as it is based
+on top of the Faster R-CNN.
+The code is adapted from https://pytorch.org/tutorials/intermediate/torchvision_tutorial.html.
 
 """
 
@@ -24,6 +27,7 @@ from engine import train_one_epoch, evaluate
 import utils
 import transforms as T
 import torch
+import  os
 from data_reader import EgoHandsDataset
 from network import get_instance_segmentation_model
 
@@ -80,8 +84,8 @@ lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer,
                                                step_size=3,
                                                gamma=0.1)
 
-# let's train it for 10 epochs
-num_epochs = 10
+# let's train it for 1 epoch
+num_epochs = 1
 
 for epoch in range(num_epochs):
     print(f"Epoch {epoch}")
@@ -94,4 +98,5 @@ for epoch in range(num_epochs):
 
 
 print('Finished Training')
-torch.save(model, '../model/model_segmentation.torch')
+os.makedirs('../models', exist_ok=True)
+torch.save(model, '../models/model_segmentation.torch')

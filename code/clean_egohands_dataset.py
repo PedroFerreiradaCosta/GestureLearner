@@ -1,5 +1,5 @@
 """
-Code extracted and adapted from `https://github.com/molyswu/hand_detection/blob/temp/hand_detection/egohands_dataset_clean.py`
+Code adapted from `https://github.com/molyswu/hand_detection/blob/temp/hand_detection/egohands_dataset_clean.py`
 
 Used to clean egoHands dataset.
 Generates 2 image folders:
