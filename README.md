@@ -44,7 +44,7 @@ Install dependencies
 pip3 install -r requirements.txt
 ```
 ## Author
-* **Pedro F da Costa** - [Website](http://pedroferreiradacosta.github.io/) - [CV](https://pedroferreiradacosta.github.io//assets/CV_Pedro_daCosta.pdf)
+* **Pedro F da Costa** - [Website](http://pedroferreiradacosta.github.io/) - [CV](https://pedroferreiradacosta.github.io//assets/CV_Pedro_daCosta.pdf) 
 
 ## Acknowledgments
 This work adapted code from:
