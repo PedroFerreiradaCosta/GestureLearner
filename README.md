@@ -1,4 +1,7 @@
 # Gesture Demo
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/PedroFerreiradaCosta/FaceFitOpt/blob/master/LICENSE)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gist/PedroFerreiradaCosta/4b6cf7dde3d985e6fc082f39db872628/gesturedemo.ipynb) 
+[![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://github.com/PedroFerreiradaCosta/GestureLearner/blob/main/GestureDemo.ipynb)
 
 This project is a proof-of-concept of model
  that is able  to classify any gesture with
@@ -12,9 +15,11 @@ This project is a proof-of-concept of model
    and human-in-the-loop machine learning.
    
    This project is implemented in PyTorch.
-   
+
+![Distilling information](./figures/example.png)
+
 ## Getting Started
-[Click here to see the proof-of-concept on a Colab notebook.](https://github.com/PedroFerreiradaCosta/FaceFitOpt)
+[Click here to see the proof-of-concept on a Colab notebook.](https://colab.research.google.com/gist/PedroFerreiradaCosta/4b6cf7dde3d985e6fc082f39db872628/gesturedemo.ipynb)
 
 ____
 
